@@ -16,6 +16,7 @@ def obtener_personas():
         ORDER BY p.nombre
     """
     driver = get_driver()
+    
     try:
         with driver.session(database=NEO4J_DATABASE) as session:
             result = session.run(query)
@@ -111,7 +112,7 @@ def crear_persona(persona_id, nombre, edad, nivel_educativo, email, habilidades_
 if __name__ == "__main__":
 
     #Prueba rapida
-    
+
     resultados = obtener_compatibilidad("p1")
     for r in resultados:
         print(f"{r['carrera']}: {r['compatibilidad']}% "
