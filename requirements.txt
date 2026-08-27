@@ -1,6 +1,7 @@
 # Core dependencies
 neo4j==5.21.0
 python-dotenv==1.0.1
+email-validator==2.3.0
 
 # Backend API
 fastapi==0.115.0
