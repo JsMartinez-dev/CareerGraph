@@ -164,6 +164,7 @@ def crear_carrera(carrera: CarreraCreate) -> CarreraResponse:
 def obtener_habilidades() -> list[HabilidadResponse]:
     query = """
         MATCH (h:Habilidad)
+        WHERE h.id IS NOT NULL AND h.nombre IS NOT NULL AND h.categoria IS NOT NULL
         RETURN h.id AS id, h.nombre AS nombre, h.categoria AS categoria
         ORDER BY h.categoria, h.nombre
     """
