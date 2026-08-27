@@ -1,4 +1,4 @@
-# CareerGraph 🔗
+# CareerGraph 
 
 Sistema de recomendación de carreras basado en grafos, construido con **Neo4j** y **Python**. A partir de los intereses y habilidades de una persona, calcula un porcentaje de compatibilidad con distintas carreras universitarias.
 
@@ -100,7 +100,7 @@ careergraph/
 
 ---
 
-## ⚙️ Instalación y ejecución
+##  Instalación y ejecución
 
 1. Clonar el repositorio
    ```bash
@@ -140,12 +140,12 @@ careergraph/
 
 ---
 
-## 📸 Demo
+##  Demo
 
 *(Agregar aquí capturas de pantalla o GIF de la app funcionando antes de la entrega)*
 
 ---
 
-## 📄 Licencia
+##  Licencia
 
 Proyecto académico, uso educativo.
