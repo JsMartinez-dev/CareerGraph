@@ -31,7 +31,5 @@ def verificar_conexion():
     finally:
         driver.close()
 
-print("Conexion directa no importa dondee")
 if __name__ == "__main__":
     verificar_conexion()
-    print("Conexion directa solo si es DIRECTA")
