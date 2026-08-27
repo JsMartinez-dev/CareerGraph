@@ -2,7 +2,7 @@
 
 Sistema de recomendación de carreras basado en grafos, construido con **Neo4j** y **Python**. A partir de los intereses y habilidades de una persona, calcula un porcentaje de compatibilidad con distintas carreras universitarias.
 
-Proyecto desarrollado para la clase de [nombre de la materia] — [fecha de presentación].
+Proyecto desarrollado para la clase de base de datos no relacionales — 27/08/2026.
 
 ---
 
@@ -52,8 +52,22 @@ Elegir una carrera universitaria es una decisión difícil cuando no se tiene cl
 - `(Carrera)-[:REQUIERE]->(Habilidad)`
 
 **Cálculo de compatibilidad:**
-Se compara el conjunto de habilidades de la persona contra el conjunto de habilidades requeridas por cada carrera, generando un porcentaje de coincidencia.
 
+
+Se utiliza la siguiente fórmula:
+
+$$
+Compatibilidad =
+\frac{\text{Habilidades coincidentes}}
+{\text{Total de habilidades requeridas}}
+\times 100
+$$
+
+Donde:
+
+- Habilidades coincidentes: habilidades que la persona tiene en común con las requeridas por la carrera.
+- Total de habilidades requeridas: cantidad total de habilidades que requiere la carrera.
+- Compatibilidad: porcentaje de coincidencia entre la persona y la carrera.
 ---
 
 ##  Tecnologías
