@@ -74,8 +74,10 @@ Donde:
 
 - [Neo4j](https://neo4j.com/) (AuraDB) — base de datos de grafos
 - [Python 3.x](https://www.python.org/)
+- [FastAPI](https://fastapi.tiangolo.com/) — API backend
 - [Streamlit](https://streamlit.io/) — interfaz web
 - [neo4j Python Driver](https://neo4j.com/docs/python-manual/current/)
+- [Pydantic](https://docs.pydantic.dev/) — validación de datos
 
 ---
 
@@ -88,14 +90,21 @@ careergraph/
 ├── .env.example
 ├── .gitignore
 ├── cypher/
-│   └── queries.cypher       # Queries de consulta y recomendación
+│   └── queries.cypher           # Queries de consulta y recomendación
 ├── database/
-│   ├── conexion.py          # Conexión al driver de Neo4j
-│   └── crud.py              # Funciones de insert / update / query
-├── app/
-│   └── main.py               # Aplicación Streamlit
+│   ├── conexion.py              # Conexión al driver de Neo4j (legacy)
+│   └── crud.py                  # Funciones de insert / update / query (legacy)
+├── backend/                     # FastAPI Backend
+│   ├── __init__.py
+│   ├── main.py                  # Aplicación FastAPI
+│   ├── config.py                # Configuración y settings
+│   ├── database.py              # Conexión a Neo4j
+│   ├── models.py                # Modelos Pydantic
+│   └── crud.py                  # Operaciones CRUD
+├── frontend/                    # Streamlit Frontend
+│   └── app.py                   # Aplicación Streamlit
 └── data/
-    └── carga_inicial.py      # Script de carga de datos de ejemplo
+    └── carga_inicial.py         # Script de carga de datos de ejemplo
 ```
 
 ---
@@ -124,10 +133,37 @@ careergraph/
    python data/carga_inicial.py
    ```
 
-5. Ejecutar la aplicación
+5. Ejecutar el backend (API)
    ```bash
-   streamlit run app/main.py
+   python -m uvicorn backend.main:app --host 0.0.0.0 --port 8000
    ```
+
+6. Ejecutar el frontend (en otra terminal)
+   ```bash
+   streamlit run frontend/app.py
+   ```
+
+---
+
+##  API Endpoints
+
+| Método | Endpoint | Descripción |
+|--------|----------|-------------|
+| GET | `/` | Información de la API |
+| GET | `/health` | Health check (verifica BD) |
+| GET | `/stats` | Estadísticas de la BD |
+| GET | `/personas` | Listar personas |
+| GET | `/personas/{id}` | Obtener persona |
+| POST | `/personas` | Crear persona |
+| PUT | `/personas/{id}` | Actualizar persona |
+| DELETE | `/personas/{id}` | Eliminar persona |
+| GET | `/carreras` | Listar carreras |
+| GET | `/carreras/{id}` | Obtener carrera |
+| POST | `/carreras` | Crear carrera |
+| GET | `/habilidades` | Listar habilidades |
+| GET | `/habilidades/{id}` | Obtener habilidad |
+| POST | `/habilidades` | Crear habilidad |
+| GET | `/compatibilidad/{persona_id}` | Calcular compatibilidad |
 
 ---
 
@@ -136,7 +172,9 @@ careergraph/
 - [x] Modelado de personas, carreras y habilidades como grafo
 - [x] Inserción y actualización de datos vía Python (CRUD)
 - [x] Consulta de compatibilidad persona–carrera
-- [x] Interfaz web simple para seleccionar intereses y ver resultados
+- [x] API REST completa con FastAPI
+- [x] Interfaz web moderna con Streamlit
+- [x] Administración de personas, carreras y habilidades desde la UI
 
 ---
 
