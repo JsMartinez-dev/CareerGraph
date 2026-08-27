@@ -10,6 +10,7 @@ NEO4J_URI = os.getenv("NEO4J_URI")
 NEO4J_USER = os.getenv("NEO4J_USER")
 NEO4J_PASSWORD = os.getenv("NEO4J_PASSWORD")
 NEO4J_DATABASE = os.getenv("NEO4J_DATABASE", "neo4j")
+
 def get_driver():
     
     if not all([NEO4J_URI, NEO4J_USER, NEO4J_PASSWORD]):
@@ -29,7 +30,6 @@ def verificar_conexion():
         print(f"Conexion exitosa a Neo4j. Base de datos objetivo: '{NEO4J_DATABASE}'")
     finally:
         driver.close()
-
 
 if __name__ == "__main__":
     verificar_conexion()
