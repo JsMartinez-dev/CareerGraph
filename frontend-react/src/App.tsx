@@ -129,7 +129,7 @@ function App() {
     <div className="app">
       <header className="header">
         <div className="header-content">
-          <h1>🎓 CareerGraph</h1>
+          <h1>CareerGraph</h1>
           <p>Recomendación de carreras basada en grafos — Neo4j + FastAPI + React</p>
         </div>
         <div className="stats-bar">
@@ -143,10 +143,10 @@ function App() {
 
       <nav className="tabs">
         <button className={activeTab === 'recomendaciones' ? 'active' : ''} onClick={() => setActiveTab('recomendaciones')}>
-          🎯 Recomendaciones
+          Recomendaciones
         </button>
         <button className={activeTab === 'admin' ? 'active' : ''} onClick={() => setActiveTab('admin')}>
-          ⚙️ Administración
+          Administracion
         </button>
       </nav>
 
@@ -154,7 +154,7 @@ function App() {
         {activeTab === 'recomendaciones' && (
           <div className="recommendations">
             <section className="persona-selector">
-              <h2>👤 Seleccionar Persona</h2>
+              <h2>Seleccionar Persona</h2>
               <select 
                 value={selectedPersonaId} 
                 onChange={e => setSelectedPersonaId(e.target.value)}
@@ -170,7 +170,7 @@ function App() {
 
             {selectedPersona && (
               <section className="persona-skills">
-                <h2>🎯 Habilidades de {selectedPersona.nombre}</h2>
+                <h2>Habilidades de {selectedPersona.nombre}</h2>
                 <div className="skills-grid">
                   {categorias.map(cat => (
                     <div key={cat} className="skill-category">
@@ -190,7 +190,7 @@ function App() {
             )}
 
             <section className="results">
-              <h2>📊 Resultados de Compatibilidad</h2>
+              <h2>Resultados de Compatibilidad</h2>
               {compatibilidad.length === 0 ? (
                 <p className="empty">Selecciona una persona para ver recomendaciones</p>
               ) : (
@@ -223,9 +223,9 @@ function App() {
         {activeTab === 'admin' && (
           <div className="admin">
             <nav className="admin-tabs">
-              <button className={adminTab === 'persona' ? 'active' : ''} onClick={() => setAdminTab('persona')}>➕ Persona</button>
-              <button className={adminTab === 'carrera' ? 'active' : ''} onClick={() => setAdminTab('carrera')}>➕ Carrera</button>
-              <button className={adminTab === 'habilidad' ? 'active' : ''} onClick={() => setAdminTab('habilidad')}>➕ Habilidad</button>
+              <button className={adminTab === 'persona' ? 'active' : ''} onClick={() => setAdminTab('persona')}>Persona</button>
+              <button className={adminTab === 'carrera' ? 'active' : ''} onClick={() => setAdminTab('carrera')}>Carrera</button>
+              <button className={adminTab === 'habilidad' ? 'active' : ''} onClick={() => setAdminTab('habilidad')}>Habilidad</button>
             </nav>
 
             {adminTab === 'persona' && (

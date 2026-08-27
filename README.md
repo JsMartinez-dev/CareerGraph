@@ -82,7 +82,7 @@ Donde:
 
 ---
 
-## 📁 Estructura del proyecto
+## Estructura del proyecto
 
 ```
 careergraph/
