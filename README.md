@@ -142,10 +142,11 @@ careergraph/
 
 ##  Demo
 
-*(Agregar aquí capturas de pantalla o GIF de la app funcionando antes de la entrega)*
+![Grafo en Neo4j Browser](imgs/nodos_realaciones.png)
 
+![Tabla de compatibilidad](imgs/tabla_compatibilidad.png)
 ---
 
 ##  Licencia
 
-Proyecto académico, uso educativo.
+MIT
