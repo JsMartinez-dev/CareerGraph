@@ -10,6 +10,7 @@ NEO4J_URI = os.getenv("NEO4J_URI")
 NEO4J_USER = os.getenv("NEO4J_USER")
 NEO4J_PASSWORD = os.getenv("NEO4J_PASSWORD")
 NEO4J_DATABASE = os.getenv("NEO4J_DATABASE", "neo4j")
+
 def get_driver():
     
     if not all([NEO4J_URI, NEO4J_USER, NEO4J_PASSWORD]):
@@ -30,6 +31,7 @@ def verificar_conexion():
     finally:
         driver.close()
 
-
+print("Conexion directa no importa dondee")
 if __name__ == "__main__":
     verificar_conexion()
+    print("Conexion directa solo si es DIRECTA")

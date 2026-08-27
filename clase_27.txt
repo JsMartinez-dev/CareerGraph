@@ -1,1 +1,8 @@
-Aqui van los script a presentar en la clase
+Flujo de exposicion:
+
+1. Crear la base de datos vacia
+2. Conectarnos python .\database\conexion.py
+3. Cargar los datos python .\data\carga_inicial.py
+4. Mostrar consulta 1-4
+5. Mostrar importancia de MERGE en ves de CREATE 5-6
+6. Utilizar funcion compatibilidad
