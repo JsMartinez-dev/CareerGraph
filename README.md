@@ -2,7 +2,7 @@
 
 Sistema de recomendación de carreras basado en grafos, construido con **Neo4j** y **Python**. A partir de los intereses y habilidades de una persona, calcula un porcentaje de compatibilidad con distintas carreras universitarias.
 
-Proyecto desarrollado para la clase de [nombre de la materia] — [fecha de presentación].
+Proyecto desarrollado para la clase de base de datos no relacionales — 27/08/2026.
 
 ---
 
