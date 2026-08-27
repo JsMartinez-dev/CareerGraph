@@ -100,6 +100,26 @@ WITH p
 MATCH (h:Habilidad) WHERE h.id IN ['h5','h6','h4','h9']
 MERGE (p)-[:LE_GUSTA]->(h);
 
+
+// QUERY DE COMPATIBILIDAD
+
+MATCH (p:Persona {id: $personaId})-[:LE_GUSTA]->(h:Habilidad)
+WITH p, collect(h.id) AS habilidadesPersona
+
+MATCH (c:Carrera)-[:REQUIERE]->(hc:Habilidad)
+WITH p, habilidadesPersona, c, collect(hc.id) AS habilidadesCarrera
+
+WITH c, habilidadesCarrera,
+     [x IN habilidadesCarrera WHERE x IN habilidadesPersona] AS interseccion
+
+RETURN c.nombre AS carrera,
+       size(interseccion) AS coincidencias,
+       size(habilidadesCarrera) AS totalRequeridas,
+       round(100.0 * size(interseccion) / size(habilidadesCarrera), 2) AS compatibilidad
+ORDER BY compatibilidad DESC;
+
+
+
 // 5. VERIFICACION RAPIDA 
 
 MATCH (n) RETURN labels(n) AS tipo, count(n) AS total;
