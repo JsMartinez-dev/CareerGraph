@@ -1,4 +1,5 @@
 from typing import Optional
+import uuid
 from neo4j import Session
 from backend.database import get_session
 from backend.models import (
@@ -38,6 +39,8 @@ def obtener_persona(persona_id: str) -> Optional[PersonaResponse]:
 
 
 def crear_persona(persona: PersonaCreate) -> PersonaResponse:
+    # Auto-generar ID si no se proporciona
+    persona_id = persona.id or f"p_{uuid.uuid4().hex[:8]}"
     query = """
         MERGE (p:Persona {id: $id})
         SET p.nombre = $nombre, p.edad = $edad,
@@ -49,11 +52,12 @@ def crear_persona(persona: PersonaCreate) -> PersonaResponse:
         RETURN p.id AS id, p.nombre AS nombre, p.edad AS edad,
                p.nivel_educativo AS nivel_educativo, p.email AS email,
                $habilidades AS habilidades
+        LIMIT 1
     """
     with get_session() as session:
         result = session.run(
             query,
-            id=persona.id,
+            id=persona_id,
             nombre=persona.nombre,
             edad=persona.edad,
             nivel_educativo=persona.nivel_educativo.value,
