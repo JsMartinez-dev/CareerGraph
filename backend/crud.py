@@ -13,6 +13,7 @@ from backend.models import (
 def obtener_personas() -> list[PersonaResponse]:
     query = """
         MATCH (p:Persona)
+        WHERE p.id IS NOT NULL AND p.nombre IS NOT NULL AND p.email IS NOT NULL
         OPTIONAL MATCH (p)-[:LE_GUSTA]->(h:Habilidad)
         RETURN p.id AS id, p.nombre AS nombre, p.edad AS edad,
                p.nivel_educativo AS nivel_educativo, p.email AS email,
@@ -111,6 +112,7 @@ def eliminar_persona(persona_id: str) -> bool:
 def obtener_carreras() -> list[CarreraResponse]:
     query = """
         MATCH (c:Carrera)
+        WHERE c.id IS NOT NULL AND c.nombre IS NOT NULL AND c.descripcion IS NOT NULL AND c.facultad IS NOT NULL
         OPTIONAL MATCH (c)-[:REQUIERE]->(h:Habilidad)
         RETURN c.id AS id, c.nombre AS nombre, c.descripcion AS descripcion,
                c.facultad AS facultad, collect(h.id) AS requiere
