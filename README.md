@@ -75,7 +75,8 @@ Donde:
 - [Neo4j](https://neo4j.com/) (AuraDB) — base de datos de grafos
 - [Python 3.x](https://www.python.org/)
 - [FastAPI](https://fastapi.tiangolo.com/) — API backend
-- [Streamlit](https://streamlit.io/) — interfaz web
+- [React 18 + TypeScript](https://react.dev/) — Frontend SPA
+- [Vite](https://vite.dev/) — Build tool
 - [neo4j Python Driver](https://neo4j.com/docs/python-manual/current/)
 - [Pydantic](https://docs.pydantic.dev/) — validación de datos
 
@@ -101,8 +102,15 @@ careergraph/
 │   ├── database.py              # Conexión a Neo4j
 │   ├── models.py                # Modelos Pydantic
 │   └── crud.py                  # Operaciones CRUD
-├── frontend/                    # Streamlit Frontend
-│   └── app.py                   # Aplicación Streamlit
+├── frontend-react/              # React + TypeScript + Vite Frontend
+│   ├── src/
+│   │   ├── App.tsx              # Componente principal
+│   │   ├── api.ts               # Cliente API (axios)
+│   │   ├── types.ts             # Tipos TypeScript
+│   │   └── App.css              # Estilos
+│   ├── package.json
+│   ├── tsconfig.json
+│   └── vite.config.ts
 └── data/
     └── carga_inicial.py         # Script de carga de datos de ejemplo
 ```
@@ -111,37 +119,56 @@ careergraph/
 
 ##  Instalación y ejecución
 
-1. Clonar el repositorio
-   ```bash
-   git clone https://github.com/[usuario]/careergraph.git
-   cd careergraph
-   ```
+### Prerrequisitos
+- Python 3.10+
+- Node.js 18+
+- Neo4j 5.x (local o AuraDB)
 
-2. Crear entorno virtual e instalar dependencias
-   ```bash
-   python -m venv venv
-   source venv/bin/activate   # En Windows: venv\Scripts\activate
-   pip install -r requirements.txt
-   ```
+### 1. Clonar el repositorio
+```bash
+git clone https://github.com/[usuario]/careergraph.git
+cd careergraph
+```
 
-3. Configurar credenciales
-   - Copiar `.env.example` a `.env`
-   - Completar con las credenciales de tu instancia de Neo4j AuraDB (URI, usuario, contraseña)
+### 2. Configurar variables de entorno
+```bash
+cp .env.example .env
+# Editar .env con tus credenciales Neo4j
+```
 
-4. Cargar datos iniciales
-   ```bash
-   python data/carga_inicial.py
-   ```
+### 3. Backend (FastAPI)
 
-5. Ejecutar el backend (API)
-   ```bash
-   python -m uvicorn backend.main:app --host 0.0.0.0 --port 8000
-   ```
+**Opción A: Con uv (recomendado)**
+```bash
+uv venv
+uv pip install -r requirements.txt
+uv run python data/carga_inicial.py
+uv run uvicorn backend.main:app --host 0.0.0.0 --port 8000
+```
 
-6. Ejecutar el frontend (en otra terminal)
-   ```bash
-   streamlit run frontend/app.py
-   ```
+**Opción B: Con venv estándar**
+```bash
+python -m venv .venv
+.venv\Scripts\activate   # Windows
+# source .venv/bin/activate  # Linux/Mac
+pip install -r requirements.txt
+python data/carga_inicial.py
+uvicorn backend.main:app --host 0.0.0.0 --port 8000
+```
+
+Backend corriendo en: **http://localhost:8000**  
+Documentación API (Swagger): **http://localhost:8000/docs**
+
+### 4. Frontend (React + Vite)
+
+En otra terminal:
+```bash
+cd frontend-react
+npm install
+npm run dev -- --host
+```
+
+Frontend corriendo en: **http://localhost:5173**
 
 ---
 
@@ -173,8 +200,9 @@ careergraph/
 - [x] Inserción y actualización de datos vía Python (CRUD)
 - [x] Consulta de compatibilidad persona–carrera
 - [x] API REST completa con FastAPI
-- [x] Interfaz web moderna con Streamlit
+- [x] Frontend SPA moderno con React + TypeScript
 - [x] Administración de personas, carreras y habilidades desde la UI
+- [x] Cálculo de compatibilidad en tiempo real
 
 ---
 
