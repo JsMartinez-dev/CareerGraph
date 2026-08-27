@@ -1,0 +1,16 @@
+# Variables de entorno (credenciales) - NUNCA subir
+.env
+ 
+# Entorno virtual de Python
+venv/
+env/
+__pycache__/
+*.pyc
+ 
+# Streamlit
+.streamlit/
+ 
+# Sistema operativo
+.DS_Store
+Thumbs.db
+ 

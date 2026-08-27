@@ -109,7 +109,7 @@ WITH p, collect(h.id) AS habilidadesPersona
 MATCH (c:Carrera)-[:REQUIERE]->(hc:Habilidad)
 WITH p, habilidadesPersona, c, collect(hc.id) AS habilidadesCarrera
 
-WITH c, habilidadesCarrera,
+WITH c, habilidadesCarrera, 
      [x IN habilidadesCarrera WHERE x IN habilidadesPersona] AS interseccion
 
 RETURN c.nombre AS carrera,

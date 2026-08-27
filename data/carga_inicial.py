@@ -1,14 +1,11 @@
-"""
-Script de carga inicial de datos para CareerGraph.
-"""
 
 import sys
 import os
-
+ 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
-from database.conexion import get_driver
-
+ 
+from database.conexion import get_driver, NEO4J_DATABASE
+ 
 
 HABILIDADES = [
     {"id": "h1", "nombre": "Pensamiento logico", "categoria": "Cognitiva"},
@@ -27,7 +24,7 @@ HABILIDADES = [
     {"id": "h14", "nombre": "Habilidad manual/tecnica", "categoria": "Tecnica"},
     {"id": "h15", "nombre": "Pensamiento critico", "categoria": "Cognitiva"},
 ]
-
+ 
 CARRERAS = [
     {
         "id": "c1", "nombre": "Ingenieria de Sistemas",
@@ -78,43 +75,45 @@ CARRERAS = [
         "requiere": ["h5", "h6", "h4"],
     },
 ]
-
+ 
 PERSONAS = [
     {
         "id": "p1", "nombre": "Camila Torres", "edad": 17,
         "nivel_educativo": "Bachillerato", "email": "camila.torres@example.com",
-        "le_gusta": ["h1", "h2", "h10", "h13"],  # -> Ingenieria de Sistemas
+        "le_gusta": ["h1", "h2", "h10", "h13"],  
     },
     {
         "id": "p2", "nombre": "Daniel Rojas", "edad": 18,
         "nivel_educativo": "Bachillerato", "email": "daniel.rojas@example.com",
-        "le_gusta": ["h11", "h15", "h8", "h5"],  # -> Medicina
+        "le_gusta": ["h11", "h15", "h8", "h5"],  
     },
     {
         "id": "p3", "nombre": "Valentina Perez", "edad": 17,
         "nivel_educativo": "Bachillerato", "email": "valentina.perez@example.com",
-        "le_gusta": ["h8", "h5", "h15", "h7"],  # -> Psicologia
+        "le_gusta": ["h8", "h5", "h15", "h7"],  
     },
     {
         "id": "p4", "nombre": "Andres Gomez", "edad": 19,
         "nivel_educativo": "Tecnico", "email": "andres.gomez@example.com",
-        "le_gusta": ["h5", "h6", "h15", "h12"],  # -> Derecho
+        "le_gusta": ["h5", "h6", "h15", "h12"],  
     },
     {
         "id": "p5", "nombre": "Laura Jimenez", "edad": 18,
         "nivel_educativo": "Bachillerato", "email": "laura.jimenez@example.com",
-        "le_gusta": ["h5", "h6", "h4", "h9"],  # -> Comunicacion Social
+        "le_gusta": ["h5", "h6", "h4", "h9"],  
     },
 ]
+ 
+ 
+# Funciones de carga
 
-
-
+ 
 def crear_constraints(tx):
     tx.run("CREATE CONSTRAINT persona_id_unique IF NOT EXISTS FOR (p:Persona) REQUIRE p.id IS UNIQUE")
     tx.run("CREATE CONSTRAINT carrera_id_unique IF NOT EXISTS FOR (c:Carrera) REQUIRE c.id IS UNIQUE")
     tx.run("CREATE CONSTRAINT habilidad_id_unique IF NOT EXISTS FOR (h:Habilidad) REQUIRE h.id IS UNIQUE")
-
-
+ 
+ 
 def crear_habilidades(tx, habilidades):
     tx.run(
         """
@@ -124,8 +123,8 @@ def crear_habilidades(tx, habilidades):
         """,
         habilidades=habilidades,
     )
-
-
+ 
+ 
 def crear_carreras(tx, carreras):
     tx.run(
         """
@@ -139,8 +138,8 @@ def crear_carreras(tx, carreras):
         """,
         carreras=carreras,
     )
-
-
+ 
+ 
 def crear_personas(tx, personas):
     tx.run(
         """
@@ -155,28 +154,29 @@ def crear_personas(tx, personas):
         """,
         personas=personas,
     )
-
-
+ 
+ 
 def main():
     driver = get_driver()
     try:
-        with driver.session() as session:
+        with driver.session(database=NEO4J_DATABASE) as session:
+            print(f"Base de datos objetivo: '{NEO4J_DATABASE}'")
             print("Creando constraints...")
             session.execute_write(crear_constraints)
-
+ 
             print("Cargando habilidades...")
             session.execute_write(crear_habilidades, HABILIDADES)
-
+ 
             print("Cargando carreras y relaciones REQUIERE...")
             session.execute_write(crear_carreras, CARRERAS)
-
+ 
             print("Cargando personas y relaciones LE_GUSTA...")
             session.execute_write(crear_personas, PERSONAS)
-
+ 
         print("Carga inicial completada con exito.")
     finally:
         driver.close()
-
-
+ 
+ 
 if __name__ == "__main__":
     main()

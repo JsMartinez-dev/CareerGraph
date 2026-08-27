@@ -1,11 +1,11 @@
 
-
 import sys
 import os
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from database.conexion import get_driver
+from database.conexion import get_driver, NEO4J_DATABASE
+
 
 
 def obtener_personas():
@@ -17,7 +17,7 @@ def obtener_personas():
     """
     driver = get_driver()
     try:
-        with driver.session() as session:
+        with driver.session(database=NEO4J_DATABASE) as session:
             result = session.run(query)
             return [dict(r) for r in result]
     finally:
@@ -32,7 +32,7 @@ def obtener_carreras():
     """
     driver = get_driver()
     try:
-        with driver.session() as session:
+        with driver.session(database=NEO4J_DATABASE) as session:
             result = session.run(query)
             return [dict(r) for r in result]
     finally:
@@ -47,15 +47,17 @@ def obtener_habilidades():
     """
     driver = get_driver()
     try:
-        with driver.session() as session:
+        with driver.session(database=NEO4J_DATABASE) as session:
             result = session.run(query)
             return [dict(r) for r in result]
     finally:
         driver.close()
 
 
+# Calculo de compatibilidad 
+
 def obtener_compatibilidad(persona_id: str):
-   
+    
     query = """
         MATCH (p:Persona {id: $personaId})-[:LE_GUSTA]->(h:Habilidad)
         WITH p, collect(h.id) AS habilidadesPersona
@@ -74,7 +76,7 @@ def obtener_compatibilidad(persona_id: str):
     """
     driver = get_driver()
     try:
-        with driver.session() as session:
+        with driver.session(database=NEO4J_DATABASE) as session:
             result = session.run(query, personaId=persona_id)
             return [dict(r) for r in result]
     finally:
@@ -83,7 +85,7 @@ def obtener_compatibilidad(persona_id: str):
 
 
 def crear_persona(persona_id, nombre, edad, nivel_educativo, email, habilidades_ids):
-  
+
     query = """
         MERGE (p:Persona {id: $id})
         SET p.nombre = $nombre, p.edad = $edad,
@@ -95,7 +97,7 @@ def crear_persona(persona_id, nombre, edad, nivel_educativo, email, habilidades_
     """
     driver = get_driver()
     try:
-        with driver.session() as session:
+        with driver.session(database=NEO4J_DATABASE) as session:
             session.run(
                 query,
                 id=persona_id, nombre=nombre, edad=edad,
@@ -107,6 +109,9 @@ def crear_persona(persona_id, nombre, edad, nivel_educativo, email, habilidades_
 
 
 if __name__ == "__main__":
+
+    #Prueba rapida
+    
     resultados = obtener_compatibilidad("p1")
     for r in resultados:
         print(f"{r['carrera']}: {r['compatibilidad']}% "
