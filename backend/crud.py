@@ -135,6 +135,8 @@ def obtener_carrera(carrera_id: str) -> Optional[CarreraResponse]:
 
 
 def crear_carrera(carrera: CarreraCreate) -> CarreraResponse:
+    # Auto-generar ID si no se proporciona
+    carrera_id = carrera.id or f"c_{uuid.uuid4().hex[:8]}"
     query = """
         MERGE (c:Carrera {id: $id})
         SET c.nombre = $nombre, c.descripcion = $descripcion, c.facultad = $facultad
@@ -144,11 +146,12 @@ def crear_carrera(carrera: CarreraCreate) -> CarreraResponse:
         MERGE (c)-[:REQUIERE]->(h)
         RETURN c.id AS id, c.nombre AS nombre, c.descripcion AS descripcion,
                c.facultad AS facultad, $requiere AS requiere
+        LIMIT 1
     """
     with get_session() as session:
         result = session.run(
             query,
-            id=carrera.id,
+            id=carrera_id,
             nombre=carrera.nombre,
             descripcion=carrera.descripcion,
             facultad=carrera.facultad,
@@ -181,6 +184,8 @@ def obtener_habilidad(habilidad_id: str) -> Optional[HabilidadResponse]:
 
 
 def crear_habilidad(habilidad: HabilidadCreate) -> HabilidadResponse:
+    # Auto-generar ID si no se proporciona
+    habilidad_id = habilidad.id or f"h_{uuid.uuid4().hex[:8]}"
     query = """
         MERGE (h:Habilidad {id: $id})
         SET h.nombre = $nombre, h.categoria = $categoria
@@ -189,7 +194,7 @@ def crear_habilidad(habilidad: HabilidadCreate) -> HabilidadResponse:
     with get_session() as session:
         result = session.run(
             query,
-            id=habilidad.id,
+            id=habilidad_id,
             nombre=habilidad.nombre,
             categoria=habilidad.categoria.value
         )
