@@ -17,7 +17,7 @@ Proyecto desarrollado para la clase de base de datos no relacionales — 27/08/2
         <b>Juan Sebastian Martinez Uribe</b>
       </a>
       <br />
-      Modelado de datos y queries Cypher
+      Modelado de datos, queries Cypher y conexión a base de datos
     </td>
     <td align="center">
       <a href="https://github.com/ginozza">
@@ -26,7 +26,7 @@ Proyecto desarrollado para la clase de base de datos no relacionales — 27/08/2
         <b>Juan Manuel Simancas Martinez</b>
       </a>
       <br />
-      Backend Python y conexión a base de datos
+      Frontend con React+Vite 
     </td>
   </tr>
 </table>
